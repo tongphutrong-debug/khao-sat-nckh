@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Khảo sát chi tiêu sinh viên</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 60px 20px;
+      line-height: 1.6;
+      color: #202124;
+    }
+    a {
+      display: inline-block;
+      padding: 12px 24px;
+      margin-top: 16px;
+      border-radius: 6px;
+      background: #1a73e8;
+      color: white;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <h2>Khảo sát chi tiêu sinh viên</h2>
+  <p>Đang chuyển đến bảng hỏi khảo sát...</p>
+  <p>Nếu không tự chuyển, hãy nhấn nút bên dưới.</p>
+  <a id="continue" href="#">Bắt đầu khảo sát</a>
+
+  <script>
+    const LINK_DC =
+      'https://docs.google.com/forms/d/e/1FAIpQLSfF1HSS7hflcmRb2Rj3vm49fF0kwYXl4eXZx1D3IRdrk6dLcw/viewform';
+
+    const LINK_CT =
+      'https://docs.google.com/forms/d/e/1FAIpQLSeLilOQ45SikOYWxSXjehevUOeoiJs-mccazqSCfyZ6GDy8Gw/viewform';
+
+    let group;
+
+    try {
+      group = sessionStorage.getItem('surveyGroup');
+
+      if (group !== 'DC' && group !== 'CT') {
+        group = Math.random() < 0.5 ? 'DC' : 'CT';
+        sessionStorage.setItem('surveyGroup', group);
+      }
+    } catch (error) {
+      group = Math.random() < 0.5 ? 'DC' : 'CT';
+    }
+
+    const destination = group === 'DC' ? LINK_DC : LINK_CT;
+
+    document.getElementById('continue').href = destination;
+
+    // Chuyển trang, không giữ trang điều hướng trong lịch sử.
+    setTimeout(function () {
+      window.location.replace(destination);
+    }, 500);
+  </script>
+</body>
+</html>
